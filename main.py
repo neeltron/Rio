@@ -1,5 +1,5 @@
-from flask import Flask, jsonify, request
-app = Flask('app')
+from flask import Flask, jsonify, request, render_template
+app = Flask('app', template_folder = "templates", static_folder = "static")
 
 mode = "w"
 
@@ -14,6 +14,7 @@ def drive():
 @app.route('/control', methods = ['GET'])
 def control():
   move = request.args.get('dir')
-  return move
+  print(move)
+  return render_template('index.html')
 
 app.run(host='0.0.0.0', port=8080)
