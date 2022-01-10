@@ -1,7 +1,9 @@
 from flask import Flask, jsonify, request, render_template
+from replit import db
+
 app = Flask('app', template_folder = "templates", static_folder = "static")
 
-mode = "w"
+mode = ""
 
 @app.route('/')
 def hello_world():
@@ -9,12 +11,12 @@ def hello_world():
 
 @app.route('/drive', methods = ['GET'])
 def drive():
-  return jsonify(mode)
+  return jsonify(db["direction"])
 
 @app.route('/control', methods = ['GET'])
 def control():
-  move = request.args.get('dir')
-  print(move)
+  mode = request.args.get('dir')
+  db["direction"] = mode
   return render_template('index.html')
 
 app.run(host='0.0.0.0', port=8080)
